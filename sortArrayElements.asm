@@ -2,12 +2,12 @@
 		list p = 16f877a
 		#include p16f877a.inc
 
-	org 0x0000  ; Starting address of program
-	goto main
+		org 0x0000  ; Starting address of program
+		goto main
 
-	org 0x0004  ; On interrupt PC will come here
-	CLRF INTCON ; Clear the interrupt register
-	retfie      ; Return PC to main
+		org 0x0004  ; On interrupt PC will come here
+		CLRF INTCON ; Clear the interrupt register
+		retfie      ; Return PC to main
 
 main
 		movlw 0x23	; Store the array elements in temporary registers
@@ -121,4 +121,4 @@ store6		movfw 0x66
 		DECFSZ 0x69,1
 		goto sort
 
-	end		; End of program
+		end		; End of program
