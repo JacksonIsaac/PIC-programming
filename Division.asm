@@ -1,14 +1,22 @@
 ; Program to Divide two 8-bit numbers using repeated subtraction.
 	list p=16f877a
 	#include p16f877a.inc
-		
+
+	org 0x0000      ; Starting address of program
+	goto main
+
+	org 0x0004      ; On interrupt PC will come here
+	CLRF INTCON     ; Clear the interrupt register
+	retfie          ; Return PC to main
+
+main
 	BSF STATUS,5
 	BCF STATUS,6	; BANK1
-		
+
 	movlw 0xFF	; Input through PORT
 	movwf TRISB	; Dividend
 	movwf TRISC	; Divisor
-		
+
 	clrf TRISD	; Output
 	movlw 0x06	; 110
 	movwf ADCON1	; For converting PORTE to Digital
@@ -33,8 +41,9 @@ loop	incf 0x63,1	; Increment Quotient
 
 	decf 0x63,0	; Decrement Quotient by 1
 	movwf PORTD	; Quotient Output
-		
+
 	movf 0x61
 	addwf 0x60,0	; Remainder = Divsor + Dividend
 	movwf PORTE	; Remainder Output
-end			; Exit Program
+
+	end		; Exit Program

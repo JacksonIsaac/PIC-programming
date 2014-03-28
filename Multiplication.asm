@@ -1,14 +1,22 @@
 ; Program to multiply two 8-bit numbers using repeated addition method.
 	list p=16f877a
 	#include p16f877a.inc
-		
+
+	org 0x0000              ; Starting address of program
+	goto main
+
+	org 0x0004              ; On interrupt PC will come here
+	CLRF INTCON             ; Clear the interrupt register
+	retfie                  ; Return PC to main
+
+main
 	BSF STATUS,5
 	BCF STATUS,6
-		
+
 	movlw 0xFF		; Input from PORT
 	movwf TRISB		; Adding itself ( x + x )
 	movwf TRISC		; Counter	( y times )
-		
+
 	clrf TRISD		; Output from PORTD
 
 	BCF STATUS,5
@@ -28,4 +36,4 @@ loop	addwf 0x60,0		; Add x and save to WREG
 
 	movwf PORTD		; Output at PORTD
 
-end				; Exit program
+	end			; Exit program

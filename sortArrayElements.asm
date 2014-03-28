@@ -1,26 +1,34 @@
 ; Program to sort an array in Descending order
 		list p = 16f877a
 		#include p16f877a.inc
-		
+
+	org 0x0000  ; Starting address of program
+	goto main
+
+	org 0x0004  ; On interrupt PC will come here
+	CLRF INTCON ; Clear the interrupt register
+	retfie      ; Return PC to main
+
+main
 		movlw 0x23	; Store the array elements in temporary registers
 
 		movwf 0x60
-		
+
 		movlw 0x45
 		movwf 0x61
-		
+
 		movlw 0x21
 		movwf 0x62
-		
+
 		movlw 0x0A
 		movwf 0x63
-		
+
 		movlw 0xFF
 		movwf 0x64
-		
+
 		movlw 0x1C
 		movwf 0x65
-		
+
 		movlw 0x24
 		movwf 0x66
 
@@ -47,7 +55,7 @@ sort		movfw 0x69
 		SUBWF 0x62,0
 		BTFSC STATUS,Z
 		GOTO store2
-	
+
 		movfw 0x69
 		SUBWF 0x63,0
 		BTFSC STATUS,Z
@@ -82,7 +90,7 @@ store1		movfw 0x61
 		INCF FSR
 		DECFSZ 0x69,1
 		goto sort
-		
+
 store2		movfw 0x62
 		movwf INDF
 		INCF FSR
@@ -113,4 +121,4 @@ store6		movfw 0x66
 		DECFSZ 0x69,1
 		goto sort
 
-end		; End of program
+	end		; End of program
