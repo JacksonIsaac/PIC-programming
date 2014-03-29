@@ -12,7 +12,7 @@
 		RETFIE
 
 main
-		BSF STATUS,7	; Indirect Addressing Mode
+		BSF STATUS,7		; Indirect Addressing Mode
 		BSF STATUS,6
 		BCF STATUS,5
 
@@ -27,7 +27,7 @@ main
 loop					; Write 0xFF in the locations
 		movwf INDF		; Move WREG contents to location
 		INCF FSR,1		; pointed by FSR and increment FSR by 1
-		DECFSZ 0x110,1	; Decrement 0x10 (16 to base 10)
+		DECFSZ 0x110,1		; Decrement 0x10 (16 to base 10)
 		GOTO loop		; skip loop if 0
 
 		movlw 0x20
@@ -42,4 +42,4 @@ clear					; Clear the locations
 		DECFSZ 0x110,1
 		GOTO clear
 
-		end				; Exit the Program
+		end			; Exit the Program
